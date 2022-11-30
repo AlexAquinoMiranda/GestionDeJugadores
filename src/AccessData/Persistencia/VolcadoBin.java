@@ -18,38 +18,51 @@ public class VolcadoBin {
 	public static void main(String[] args) {
 		List campos = new ArrayList();
 		campos.add(new Pair("ID", 4));
+
 		campos.add(new Pair("NOMBRE", 25));
 		campos.add(new Pair("APELLIDO", 25));
 		campos.add(new Pair("FECHA_NAC", 5));
 		campos.add(new Pair("EQUIPO", 20));
 		campos.add(new Pair("ACTIVO", 4));
-		
-		
 
 		VolcadoBin faa = new VolcadoBin(".\\resources\\accesoAleatorio.dat", campos);
 		Map reg = new HashMap();
 
 		reg.put("DNI", "123456789");
-		reg.put("ID", "1");
-		reg.put("NOMBRE", "AlecisAquino");
-		reg.put("APELLIDO", "AQUINOMIRANDA");
+		reg.put("ID", "9234");
+		reg.put("NOMBRE", "AlecisAquinoqwertfdsaxcvx");
+		reg.put("APELLIDO", "AQUINOMIRANDAqertyuiasdfg");
 		reg.put("FECHA_NAC", "2.003");
-		reg.put("EQUIPO", "madrid");
+		reg.put("EQUIPO", "madridwertyuiopqwerd");
 		reg.put("ACTIVO", "true");
-		
+
 		faa.insertar(reg);
 		System.out.println(reg);
 		reg.clear();
-		
-//		reg.put("DNI", "987654321");
-//		reg.put("NOMBRE", "Alexitosuino");
-//
-//		reg.put("APELLIDO", "AQUINOMIRANDAss");
-//
-//		faa.insertar(reg, 1);
+
 //		
-		
+
 		System.out.println("realizado");
+		try {
+			System.out.println("id =  " + new String(faa.readCharsFromFile(0, 4)) + " \nnombre = "
+					+ new String(faa.readCharsFromFile(4, 25)) + " \napellido = "
+					+ new String(faa.readCharsFromFile(29, 25)) + "\n fecha= "
+					+ new String(faa.readCharsFromFile(54, 5)) + "\n equipo =  "
+					+ new String(faa.readCharsFromFile(59, 20)) + "\n activo = "
+					+ new String(faa.readCharsFromFile(79, 4)));
+			
+			System.out.println(new String(faa.readCharsFromFile(83, 2)));
+			// 0 a 4
+			// - 4 a 25 -
+			// de 29 a 25 -
+			// de 54 a 5
+//			de 59 a 20
+//			/de 79 a 4
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	VolcadoBin(String name, List<Pair<String, Integer>> campos) {
@@ -66,6 +79,35 @@ public class VolcadoBin {
 
 	public long getNumReg() {
 		return numReg;
+	}
+
+	public void leer() {
+		try {
+			RandomAccessFile faa = new RandomAccessFile(fichero, "rws");
+			faa.seek(0);
+			faa.read(new byte[1]);
+
+//			System.out.println());
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private byte[] readCharsFromFile(int seek, int chars) throws IOException {
+		String nom, apell, dni, id, fec, equi, activo;
+
+		RandomAccessFile file = new RandomAccessFile(fichero, "r");
+		file.seek(seek);
+		byte[] bytes = new byte[chars];
+
+		file.read(bytes);
+		file.close();
+		return bytes;
 	}
 
 	public void insertar(Map<String, String> reg) {
