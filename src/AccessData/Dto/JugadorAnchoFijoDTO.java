@@ -1,7 +1,7 @@
-package Persistencia.Dto;
+package AccessData.Dto;
 
 public class JugadorAnchoFijoDTO {
-
+//statura 
 	private String nombre;
 	private String apellido;
 	private int fechaNacimiento;

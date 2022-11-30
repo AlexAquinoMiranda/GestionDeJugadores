@@ -26,7 +26,6 @@ public class LogicaNegocio {
 		} while (true);
 	}
 
-
 	void eventos(int value) {
 		switch (value) {
 		case 1:

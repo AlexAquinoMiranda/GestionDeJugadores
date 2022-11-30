@@ -1,4 +1,4 @@
-package Persistencia.Dto;
+package AccessData.Dto;
 
 public class Jugador {
 

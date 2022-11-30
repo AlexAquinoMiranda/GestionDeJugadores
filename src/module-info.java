@@ -6,4 +6,6 @@
  *
  */
 module AccesoDatosPracticaUno {
+	requires java.base;
+	requires javafx.base;
 }
