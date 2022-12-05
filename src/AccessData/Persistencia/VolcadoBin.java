@@ -92,6 +92,10 @@ public class VolcadoBin {
 //		}
 	}
 
+	public int longitudFichero() {
+		
+		return (int)longReg;
+	}
 	public VolcadoBin(String name, List<Pair<String, Integer>> campos) {
 		this.fichero = new File(name);
 		this.campos = campos;

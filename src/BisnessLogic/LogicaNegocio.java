@@ -19,14 +19,16 @@ public class LogicaNegocio {
 			// + " 2.2 busqueda por nombre\n"
 					+ "3. Listado de jugadores\n"
 					// + " 3.1 busqueda por id\n"
-					+ "4. Dar baja jugador \n" + "5. Generar volcado a extension txt\n"
-					+ "6. Cargar jugadores desde txt/csv\n" + "7. Generar volcado a extensión dat\n"
-					+ "8. Modify \n9. Salir \n\n " + "Ingresa valor de acción a realizar: ");
+					+ "4. Dar baja lógica un jugador \n" + "5. Generar volcado a extension txt\n"
+					+ "6. Cargar jugadores desde txt/csv\n" + "7. Generar volcado a extensión dat\n" + "8. Modify \n"
+					+ "9. Dar de alta lógica un jugador\n" + "10. Salir \n\n "
+					+ "Ingresa valor de acción a realizar: ");
 
 			int value = 0;
 			try {
 				value = sc.nextInt();
 			} catch (InputMismatchException a) {
+				System.out.println("Ingresa un valor que sea válida.");
 
 			}
 
@@ -34,166 +36,172 @@ public class LogicaNegocio {
 		} while (true);
 	}
 
-	public void add() {
-
-		System.out.println("\tCrear nuevo jugador. \n\n " + "Obs: longitud de carácteres:\n"
-				+ "\n nombre: 25. \n apellido: 25. \n fechaNacimiento: 4. \n equipo: 20. \n activo: 5.\n id: 3\n"
-				+ "Datos a ingresar:  nombre, apellido, fechaNacimiento, equipo, activo , id");
-		// + " \n Ejemplo: Alex;Aquino;2003;Madrid;true;001 \n\n \tIntoduce datos=");
-		System.out.println("\n nombre= ");
+	private JugadorAnchoFijoDTO AddDatosJugador() throws InputMismatchException {
+		System.out.println("\n Nombre= ");
 		String dato = sc.next();
-
-		System.out.println("\napellido= ");
+		System.out.println("\n Apellido= ");
 		String apellido = sc.next();
-		System.out.println("\nfechaNacimiento = ");
+		System.out.println("\n FechaNacimiento = ");
 		int naci = sc.nextInt();
-		System.out.println("\n equipo = ");
+		System.out.println("\n Equipo = ");
 		String team = sc.next();
-		System.out.println("\n activo (true/false)= ");
+		System.out.println("\n Activo (true/false)= ");
 		boolean v = sc.nextBoolean();
-		System.out.println("\n id = ");
-		int id = sc.nextInt();
 
-//		String value[] = { "Alex", "Aquino", "2003", "Madrid", "true", "1", "", "" };
-//		 value = dato.split(";");
-//		int nacimiento = (int) Integer.valueOf(value[2]);
-//		int aid = (int) Integer.valueOf(value[5]);
-//		boolean estado = Boolean.parseBoolean(value[4]);
-//		player = new JugadorAnchoFijoDTO(value[0], value[1], nacimiento, value[3], aid, estado);
-		player = new JugadorAnchoFijoDTO(dato, apellido, naci, team, id, v);
-		System.out.println("desde metodo add");
-		System.out.println(player.toString());
-		j.insertar(player);
+		player = new JugadorAnchoFijoDTO(dato, apellido, naci, team, JugadorAnchoFijoDTO.aid++, v);
+		System.out.println("desde metodo addDatosJugador");
+//		System.out.println(player.toString());
+
+		return player;
+//		j.insertar(player);
 	}
 
 	public void buscarJugador() {
-		System.out.println(" 1. Busqueda por id\n" + " 2. Busqueda por nombre\n 3. Volver al menú principal.\n" + "Elige una opción a realizar = ");
-		int value = 0;
-		do  {
-		try {
-			value = sc.nextInt();
-		} catch (InputMismatchException a) {
+		System.out.println(" 1. Busqueda por id\n" + " 2. Busqueda por nombre\n" + " 3. Volver al menú principal.\n"
+				+ "Elige una opción a realizar = ");
 
-		}
-		if (value == 1) {
-			System.out.println("introduce el id = ");
-			int id = sc.nextInt();
-			System.out.println("buscando id " + id + "..");
-			j.buscarPorId(id);
-		} else if (value == 2) {
-			System.out.println("introduce nombre de jugador = ");
-			String nombre = sc.next();
-			System.out.println("buscando al jugador " + nombre + "...");
-			j.buscarPorNombre(nombre);
-			
-			break;
-		}else if(value ==3){
-			break;
-		}
-		}	while(value ==3);
+		int value = 0;
+		do {
+			try {
+				value = sc.nextInt();
+			} catch (InputMismatchException a) {
+				System.err.println("Valor introducido incorrecto. valores admitidos {1-3}");
+			}
+			try {
+
+				if (value == 1) {
+					System.out.println("Introduce el id = ");
+					try {
+						int id = sc.nextInt();
+						if (id > 0001) {
+							System.out.println("tiene que ser de longitud 4");
+						}
+
+						System.out.println("Buscando id " + id + "..");
+						j.buscarPorId(id);
+					} catch (InputMismatchException e) {
+
+					}
+				} else if (value == 2) {
+					System.out.println("Introduce nombre de jugador = ");
+					String nombre = sc.next();
+					System.out.println("Buscando al jugador " + nombre + "...");
+					j.buscarPorNombre(nombre);
+
+					break;
+				} else if (value == 3) {
+					break;
+				}
+			} catch (InputMismatchException e) {
+				System.err.println("Valor introducido incorrecto.");
+			}
+
+		} while (value == 3);
 	}
 
 	void eventos(int value) {
 		switch (value) {
 		case 1:
-			System.out.print("alta");
-			add();
+			System.out.print("Dar de alta un nuevo Jugador \n");
+			nuevoJugador();
 			break;
 		case 2:
+			System.out.println("Buscar un jugador\n");
 			buscarJugador();
 			break;
 		case 3:
+			System.out.println("Lista de todos los jugadores.");
 			j.listaJugadores();
-			
 			System.out.println("\n\t Filtrar jugador: ");// listo
 			buscarJugador();
 			break;
-			
-//			System.out.println("listado de jugadores \n" + "	3.1 busqueda por id\n");
-			
 		case 4:
-			// bajaJugador();
-			baja();
-			System.out.print("baja JUgador");
+			System.out.print("Dar de baja lógica un Jugador");
+			altaBajaJugador();
 			break;
 		case 5:
-			System.out.println("a txt");
+			System.out.println("exportar a fichero	.txt");
 			j.volcarTxt();
 			break;
 		case 6:
-
-			System.out.println("cargar de txt csv");
+			System.out.println("cargar desde txt");
+			j.cargarJugadores();
 			break;
 		case 7:
-			System.out.println("a dat");
+			System.out.println("Exportar a fichero	 .dat");
 			j.volcarDat();
 			break;
 		case 8:
-			System.out.println("modify\n");
-			modify();
+			System.out.println("Modificar un Jugador\n");
+			modificarJugador();
+
 			break;
-		case 9: 
+		case 9:
+			System.out.println("Dar de alta lógica un jugador");
+
+			altaBajaJugador();
+			break;
+
+		case 10:
 			System.out.println("Saliendo del programa...");
 			try {
 				Thread.sleep(2000);
-				System.out.println("fin programa");
+				System.out.println("Fin programa.");
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				System.exit(0);
 			}
 			System.exit(0);
-			
+
 		default:
-			System.out.println("valor introducido incorrecto");
+			System.out.println("Valor introducido incorrecto");
 			break;
 		}
 	}
-public void baja() {
-	JugadorAnchoFijoDTO jugador = null;
-	System.out.println("\tIntroduce el id del jugador =");
-	int id = sc.nextInt();
-	jugador = j.buscarPorId(id);
-	j.eliminar(jugador);
-}
-	public void modify() {
-		
-		JugadorAnchoFijoDTO jNew = null;
 
-		System.out.println("\tIntroduce el id del jugador =");
-		int id = sc.nextInt();
-
-		jNew = j.buscarPorId(id);
-
-		System.out.println("\n nombre= ");
-		String name = sc.next();
-		jNew.setNombre(name);
-		System.out.println("\napellido= ");
-		String apellido = sc.next();
-		jNew.setApellido(apellido);
-		System.out.println("\nfechaNacimiento = ");
-		int naci = sc.nextInt();
-		jNew.setFechaNacimiento(naci);
-		System.out.println("\n equipo = ");
-		String team = sc.next();
-		jNew.setEquipo(team);
-		System.out.println("\n activo (true/false)= ");
-		boolean v = sc.nextBoolean();
-		jNew.setActivo(v);
-
-		j.modificar(jNew);
-	}
-	
-	
 	public void altaBajaJugador() {
-		
+		JugadorAnchoFijoDTO jugador = null;
+		System.out.println("\tIntroduce el id del jugador =");
+		try {
+			int id = sc.nextInt();
+			jugador = j.buscarPorId(id);
+			System.out.println("el jugador a modificar estado esta = " + jugador.isActivo());
+			j.eliminar(jugador);
+		} catch (InputMismatchException e) {
+			System.err.println("Ingresa valores correcto");
+		}
+
 	}
+
 	public void nuevoJugador() {
-		
+		System.out.println("\tCrear nuevo jugador. \n\n " + "Obs: longitud de carácteres:\n"
+				+ "\n nombre: 25. \n apellido: 25. \n fechaNacimiento: 4. \n equipo: 20. \n activo: 5.\n id: 3\n"
+				+ "Datos a ingresar:  nombre, apellido, fechaNacimiento, equipo, activo , id");
+
+		try {
+
+			j.insertar(AddDatosJugador());
+		} catch (InputMismatchException e) {
+			System.err.println("Has  ingresado datos incorrectos.");
+
+		}
+
 	}
 
 	public void modificarJugador() {
-		
+		JugadorAnchoFijoDTO jugadorAModificar = null;
+		JugadorAnchoFijoDTO jugadorAux = null;
+
+		System.out.println("\t Introduce el id del jugador =");
+		int id = sc.nextInt();
+
+		jugadorAux = j.buscarPorId(id);
+
+		jugadorAModificar = AddDatosJugador();
+		JugadorAnchoFijoDTO.aid--;// se mantiene el valor
+		jugadorAModificar.setId(jugadorAux.getId());
+
+		j.modificar(jugadorAModificar);
+
 	}
-	
 
 }

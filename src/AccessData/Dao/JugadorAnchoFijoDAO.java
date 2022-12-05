@@ -36,6 +36,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 		campos.add(new Pair("ACTIVO", 5));
 
 		faa = new VolcadoBin(".\\resources\\accesoAleatorio.dat", campos);
+
 	}
 
 	@Override
@@ -47,12 +48,14 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 		reg.put("APELLIDO", t.getApellido());
 		reg.put("FECHA_NAC", String.valueOf(t.getFechaNacimiento()));
 		reg.put("EQUIPO", t.getEquipo());
-		reg.put("ACTIVO", String.valueOf(t.isActivo()));
+		if (t.isActivo() == true) {
+			reg.put("ACTIVO", "true ");
+		} else {
+			reg.put("ACTIVO", "false");
+		}
 		System.out.println(reg);
 		faa.insertar(reg);
 		reg.clear();
-
-		mostrarDatos(0);
 
 	}
 
@@ -66,10 +69,17 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 				if (data != null) {
 					valor = Integer.valueOf(data);
 					if (valor == t.getId()) {
-						faa.Modificar(79 + contador, String.valueOf(false));
-						System.out.println("jugador " + t.getNombre() + " dado de baja.(Lógica)");
 
-						break;
+						if (t.isActivo() == true) {
+							faa.Modificar(79 + contador, "false");
+							System.out.println("jugador " + t.getNombre() + " dado de baja.(Lógica)");
+
+							break;
+						} else if (t.isActivo() == false) {
+							faa.Modificar(79 + contador, "true ");
+							System.out.println("jugador " + t.getNombre() + " dado de Alta.(Lógica)");
+							break;
+						}
 					} else {
 						contador += 84;
 						continue;
@@ -101,7 +111,11 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 						faa.Modificar(29 + contador, t.getApellido());
 						faa.Modificar(54 + contador, String.valueOf(t.getFechaNacimiento()));
 						faa.Modificar(59 + contador, t.getEquipo());
-						faa.Modificar(79 + contador, String.valueOf(t.isActivo()));
+						if (t.isActivo() == false) {
+							faa.Modificar(79 + contador, "true ");
+						} else {
+							faa.Modificar(79 + contador, String.valueOf(t.isActivo()));
+						}
 
 						break;
 					} else {
@@ -122,14 +136,15 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 	public List<JugadorAnchoFijoDTO> buscarPorNombre(String name) {
 
 		int contador = 0;
+		int a = (int) faa.getNumReg() * 84;
+		System.out.println(a);
 
 		try {
 			for (;;) {
-//				String //names;
+
 				String names = new String(faa.readCharsFromFile(contador + 4, 25));
-//				names = new String(faa.readCharsFromFile(contador, 4));
-//				faa.getNumReg() >= contador ||
-				if (  names == null || names == "" || names.equals("   ") || names == "    ") {
+
+				if (names == null || names == "" || names.equals("   ") || names == "    ") {
 
 					break;
 				}
@@ -140,12 +155,12 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 							&& name.charAt(2) == names.charAt(2)) {
 						mostrarDatos(contador);
 					}
-						if(contador < faa.getNumReg()) {
-					contador += 84;
-					continue;
-						}else {
-							break;
-						}
+					if (contador < a) {
+						contador += 84;
+						continue;
+					} else {
+						break;
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -197,7 +212,15 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 			String apellido = new String(faa.readCharsFromFile(i + 29, 25));
 			int fecha = (int) Integer.valueOf(new String(faa.readCharsFromFile(i + 54, 4)));
 			String equipo = new String(faa.readCharsFromFile(i + 59, 20));
-			boolean active = Boolean.parseBoolean(new String(faa.readCharsFromFile(i + 79, 5)));
+			String condicion = new String(faa.readCharsFromFile(i + 79, 5));
+			boolean active = false;
+			if (condicion == "true ") {
+				active = true;
+			} else {
+				active = false;
+			}
+			// boolean active = Boolean.parseBoolean(new String(faa.readCharsFromFile(i +
+			// 79, 5)));
 			j = new JugadorAnchoFijoDTO(name, apellido, fecha, equipo, id, active);
 
 		} catch (IOException e) {
@@ -230,6 +253,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 				data = new String(faa.readCharsFromFile(contador, 4));
 				try {
 					int valr = Integer.valueOf(data);
+					System.out.println("ID DEL JUGADOR = " + valr);
 				} catch (NumberFormatException e) {
 					break;
 				}
@@ -238,7 +262,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					break;
 				} else if (data != null) {
 					mostrarDatos(contador);
-
 					contador += 84;
 					continue;
 				}
@@ -253,6 +276,42 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 
 	@Override
 	public void cargarJugadores() {
+		String ruta = ".\\resources\\CargarJugadores.txt";
+		File fichero = null;
+		FileReader fr = null;
+		BufferedReader buffer = null;
+
+		fichero = new File(ruta);
+		if (fichero.exists() && fichero.canRead()) {
+			try {
+				fr = new FileReader(fichero);
+				buffer = new BufferedReader(fr);
+				String dato = "";
+				while ((dato = buffer.readLine()) != null) {
+
+					dato.replace("} ", "").replace("nombre=", " ").replace(" apellido=", " ").replace(" apellido=", "")
+							.replace(" equipo=", "").replace(" fechaNacimiento=", " ").replace(" id=", "")
+							.replace(" activo=", " ");
+
+					String values[] = dato.replace("} ", "").replace("nombre=", "").replace(" apellido=", "")
+							.replace(" equipo=", "").replace(" fechaNacimiento=", "").replace(" id=", "")
+							.replace(" activo=", "").replace("{", "").split(",");
+
+					int nac = Integer.parseInt(values[2]);
+					int id = Integer.valueOf(values[5]);
+					boolean con = Boolean.valueOf(values[4]);
+					insertar(new JugadorAnchoFijoDTO(values[0], values[1], nac, values[3],JugadorAnchoFijoDTO.aid++ , con));
+					System.out.println("Insertando...");
+				}
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -263,12 +322,12 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 		 * SimpleDateFormat("ddMMyy").format(new Date()) + ".dat o txt";
 		 */
 		String ruta = ".\\resources\\jugadores_" + new SimpleDateFormat("ddMMyy").format(new Date()) + ".txt";
-
+		int i = 0;
 		System.out.println(ruta);
 		File file = new File(ruta);// me tiene que especificar la ruta
 		try {
 			file.createNewFile();
-			System.out.println("fichero creado");
+
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -280,9 +339,12 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 			if (file.exists() && file.canWrite()) {
 				fw = new FileWriter(file, true);
 				buffer = new BufferedWriter(fw);
-
-				buffer.write("creado");// escribo todos los datos de los jugadores
-
+				while (i < faa.getNumReg() * 84) {
+					;
+					buffer.write(mostrar(i).toString());
+					i += 84;
+					// escribo todos los datos de los jugadores
+				}
 			}
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero");

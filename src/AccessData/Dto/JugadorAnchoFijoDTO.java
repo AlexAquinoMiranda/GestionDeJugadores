@@ -1,7 +1,9 @@
 package AccessData.Dto;
 
 public class JugadorAnchoFijoDTO {
+
 //statura 
+	public static int aid = 1000;
 	private String nombre;
 	private String apellido;
 	private int fechaNacimiento;
@@ -78,7 +80,7 @@ public class JugadorAnchoFijoDTO {
 	@Override
 	public String toString() {
 		return "{" + "nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento
-				+ ", equipo=" + equipo + " , activo= " + activo + " , id=" + id + '}';
+				+ ", equipo=" + equipo + " , activo= " + activo + ", id=" + id + "} \n";
 	}
 
 }

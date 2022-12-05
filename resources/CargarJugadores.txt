@@ -1,0 +1,3 @@
+{nombre=alex                     , apellido=aquino                   , fechaNacimiento=2003, equipo=barca                , activo=false, id=0003} 
+{nombre=alexx                    , apellido=aquinoss                 , fechaNacimiento=2022, equipo=madrid               , activo=false, id=0002} 
+{nombre=THiago                   , apellido=Valdera                  , fechaNacimiento=2021, equipo=barca                , activo=true, id=0001} 

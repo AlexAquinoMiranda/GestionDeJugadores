@@ -1,0 +1,3 @@
+{nombre=ale                      , apellido=aquino                   , fechaNacimiento=2003, equipo=barca                , activo= false , id=1111} 
+{nombre=alexx                    , apellido=aquinoss                 , fechaNacimiento=2002, equipo=madrid               , activo= false , id=2222} 
+{nombre=thiagp                   , apellido=valsdra                  , fechaNacimiento=2016, equipo=barca                , activo= false , id=1000} 
