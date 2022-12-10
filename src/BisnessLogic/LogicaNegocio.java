@@ -5,13 +5,20 @@ import java.util.Scanner;
 import AccessData.Dao.JugadorAnchoFijoDAO;
 import AccessData.Dto.JugadorAnchoFijoDTO;
 
+/**
+ * 
+ * @author Alexis Aquino
+ *
+ */
 public class LogicaNegocio {
 	Scanner sc = new Scanner(System.in);
-
 	JugadorAnchoFijoDAO j = new JugadorAnchoFijoDAO();
 	JugadorAnchoFijoDTO player = null;
 	Comprobante comprobar = new Comprobante();
 
+	/**
+	 * menú principal de la aplicación para gestionar jugadores
+	 */
 	public void menuPrincipal() {
 
 		do {
@@ -33,6 +40,12 @@ public class LogicaNegocio {
 		} while (true);
 	}
 
+	/**
+	 * eventos es un método en donde se va a ejecutar una acción acorde a un valor
+	 * ingresado.
+	 * 
+	 * @param value value es el valor de la accion a realizar
+	 */
 	void eventos(int value) {
 		switch (value) {
 		case 1:
@@ -42,7 +55,7 @@ public class LogicaNegocio {
 			break;
 		case 2:
 			System.out.println("Buscar un jugador\n");
-			comprobar.consultarFichaJugador();// debe de poder modificarlo.
+			comprobar.consultarFichaJugador();
 
 			break;
 		case 3:

@@ -5,7 +5,6 @@
  * @author 34605
  *
  */
-module AccesoDatosPracticaUno {
-	requires java.base;
+ module AccesoDatosPracticaUno  {
 	requires javafx.base;
 }

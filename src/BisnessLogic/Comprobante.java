@@ -1,13 +1,16 @@
 package BisnessLogic;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import AccessData.Dao.JugadorAnchoFijoDAO;
 import AccessData.Dto.JugadorAnchoFijoDTO;
 
+/**
+ * 
+ * @author Alexis Aquino
+ *
+ */
 public class Comprobante {
 
 	JugadorAnchoFijoDAO jugadorDao = new JugadorAnchoFijoDAO();
@@ -63,22 +66,21 @@ public class Comprobante {
 
 							System.out.println("Buscando el id " + id + "...");
 
-							jugadorAux=	jugadorDao.buscarPorId(id);
-						
-							
+							jugadorAux = jugadorDao.buscarPorId(id);
+
 						} else {
 							System.err.println("El id debe de ser de longitud 4");
 						}
-						
+
 						System.out.println(" \nModificar al jugador (s/n): ");
-						String condicion= 	sc.next();
-						 if(condicion.equals("s") || condicion.equals("S")) {
+						String condicion = sc.next();
+						if (condicion.equals("s") || condicion.equals("S")) {
 							jugadorAModificar = AddDatosJugador();
-							
+
 							jugadorAModificar.setId(jugadorAux.getId());
 
 							jugadorDao.modificar(jugadorAModificar);
-						
+
 						}
 
 					} catch (InputMismatchException e) {

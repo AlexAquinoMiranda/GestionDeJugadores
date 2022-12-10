@@ -11,17 +11,13 @@ import java.util.Map;
 import AccessData.Dto.JugadorAnchoFijoDTO;
 import AccessData.Persistencia.VolcadoBin;
 import javafx.util.Pair;
-
 /**
- * String a = "C:\\Users\\34605\\Desktop\\alee" + new
- * SimpleDateFormat("ddMMyy").format(new Date()) + ".dat o txt";
  * 
- * @author 34605
+ * @author Alexis Aquino
  *
  */
 public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 	VolcadoBin faa = null;
-//	public static int identificador = idAumento();
 	List<JugadorAnchoFijoDTO> jugadores = new ArrayList<>();
 
 	public JugadorAnchoFijoDAO() {
@@ -34,7 +30,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 		campos.add(new Pair("ACTIVO", 5));
 
 		faa = new VolcadoBin(".\\resources\\accesoAleatorio.dat", campos);
-
 	}
 
 	@Override
@@ -86,8 +81,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 
 		} catch (NumberFormatException | IOException e1) {
 			System.out.println("ingresa datos correctos");
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 	}
@@ -124,8 +117,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 
 		} catch (NumberFormatException | IOException e1) {
 			System.out.println("ingresa datos correctos");
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 	}
@@ -190,8 +181,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 
 		} catch (NumberFormatException | IOException e1) {
 			System.out.println("ingresa datos correctos");
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		return j;
@@ -200,7 +189,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 	private JugadorAnchoFijoDTO mostrar(int i) {
 		JugadorAnchoFijoDTO j = null;
 		try {
-//		
 			int id = (int) Integer.valueOf(new String(faa.readCharsFromFile(i + 0, 4)));
 			String name = new String(faa.readCharsFromFile(i + 4, 25));
 			String apellido = new String(faa.readCharsFromFile(i + 29, 25));
@@ -230,8 +218,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					+ new String(faa.readCharsFromFile(i + 59, 20)) + "\nactivo = "
 					+ new String(faa.readCharsFromFile(i + 79, 5)) + " \n\n---------------------");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -260,19 +246,13 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		return this.jugadores;
 	}
 
-	/**
-	 * tengo que borrar lo anterior!!!!!!!!
-	 */
 	@Override
 	public void cargarJugadores() {
-//		rita hardcoreada
 		String ruta = ".\\resources\\jugadoresTxT_101222.txt";
 		File fichero = null;
 		FileReader fr = null;
@@ -285,11 +265,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 				buffer = new BufferedReader(fr);
 				String dato = "";
 				while ((dato = buffer.readLine()) != null) {
-
-//					dato.replace("} ", "").replace("nombre=", " ").replace(" apellido=", " ").replace(" apellido=", "")
-//							.replace(" equipo=", "").replace(" fechaNacimiento=", " ").replace(" id=", "")
-//							.replace(" activo=", " ");
-
 					String values[] = dato.replace("} ", "").replace("nombre=", "").replace(" apellido=", "")
 							.replace(" equipo=", "").replace(" fechaNacimiento=", "").replace(" id=", "")
 							.replace(" activo=", "").replace("{", "").split(",");
@@ -303,11 +278,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 				}
 
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 
@@ -315,10 +286,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 
 	@Override
 	public void volcarTxt() {
-		/**
-		 * String a = "C:\\Users\\34605\\Desktop\\alee" + new
-		 * SimpleDateFormat("ddMMyy").format(new Date()) + ".dat o txt";
-		 */
 		String ruta = ".\\resources\\jugadoresTxT_" + new SimpleDateFormat("ddMMyy").format(new Date()) + ".txt";
 		int i = 0;
 		System.out.println(ruta);
@@ -340,7 +307,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					;
 					buffer.write(mostrar(i).toString());
 					i += 84;
-					// escribo todos los datos de los jugadores
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -356,7 +322,6 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					fw.close();
 				}
 			} catch (IOException e) {
-				e.getCause();
 			}
 		}
 	}
@@ -371,8 +336,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 			file.createNewFile();
 			System.out.println("fichero creado");
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+
 		}
 		FileWriter fw = null;
 		BufferedWriter buffer = null;
@@ -402,7 +366,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					fw.close();
 				}
 			} catch (IOException e) {
-				e.getCause();
+				System.err.println("Error volcado.");
 			}
 		}
 	}
@@ -417,42 +381,21 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 			String dato;
 			try {
 				dato = new String(faa.readCharsFromFile(i + 0, 4));
-				
+
 				if (dato != null) {
 					System.out.println(dato);
 					id = Integer.parseInt(dato);
 
-					if (id >=contador) {
+					if (id >= contador) {
 						contador = id + 1;
 					}
-
 				}
 				i += 84;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Error al cargar el id.");
 			}
 		}
 
-//		try {
-//			for (;;) {
-//				int id = (int) Integer.valueOf(new String(faa.readCharsFromFile(i + 0, 4)));
-//				System.out.println(id );
-//				
-//				if (id > contador) {
-//					contador = id + 1;
-//				}
-//				if (i < a) {
-//					i += 84;
-//					continue;
-//				} else {
-//					break;
-//				}
-//			}
-//		} catch (NumberFormatException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return contador;
 	}
 }
