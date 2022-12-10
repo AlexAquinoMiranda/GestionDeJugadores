@@ -422,7 +422,7 @@ public class JugadorAnchoFijoDAO implements IJugadorDao<JugadorAnchoFijoDTO> {
 					System.out.println(dato);
 					id = Integer.parseInt(dato);
 
-					if (id > contador) {
+					if (id >=contador) {
 						contador = id + 1;
 					}
 

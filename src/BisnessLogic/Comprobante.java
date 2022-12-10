@@ -42,6 +42,8 @@ public class Comprobante {
 	 * este metodo tiene que poder modifiicar a un jugador cuando se buxca su nombre
 	 */
 	public void consultarFichaJugador() {
+		JugadorAnchoFijoDTO jugadorAModificar = null;
+		JugadorAnchoFijoDTO jugadorAux = null;
 		System.out.println(" 1. Busqueda por id\n" + " 2. Busqueda por nombre\n" + " 3. Volver al menú principal.\n"
 				+ "Elige una opción a realizar = ");
 
@@ -61,9 +63,22 @@ public class Comprobante {
 
 							System.out.println("Buscando el id " + id + "...");
 
-							jugadorDao.buscarPorId(id);
+							jugadorAux=	jugadorDao.buscarPorId(id);
+						
+							
 						} else {
 							System.err.println("El id debe de ser de longitud 4");
+						}
+						
+						System.out.println(" \nModificar al jugador (s/n): ");
+						String condicion= 	sc.next();
+						 if(condicion.equals("s") || condicion.equals("S")) {
+							jugadorAModificar = AddDatosJugador();
+							
+							jugadorAModificar.setId(jugadorAux.getId());
+
+							jugadorDao.modificar(jugadorAModificar);
+						
 						}
 
 					} catch (InputMismatchException e) {
