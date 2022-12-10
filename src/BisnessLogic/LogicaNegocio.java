@@ -10,6 +10,7 @@ public class LogicaNegocio {
 
 	JugadorAnchoFijoDAO j = new JugadorAnchoFijoDAO();
 	JugadorAnchoFijoDTO player = null;
+	Comprobante comprobar = new Comprobante();
 
 	public void menuPrincipal() {
 
@@ -103,40 +104,50 @@ public class LogicaNegocio {
 		switch (value) {
 		case 1:
 			System.out.print("Dar de alta un nuevo Jugador \n");
-			nuevoJugador();
+			comprobar.CrearNuevoJugador();
+			
 			break;
 		case 2:
 			System.out.println("Buscar un jugador\n");
-			buscarJugador();
+			comprobar.consultarFichaJugador();// debe de poder modificarlo.
+			
 			break;
 		case 3:
 			System.out.println("Lista de todos los jugadores.");
-			j.listaJugadores();
-			System.out.println("\n\t Filtrar jugador: ");// listo
-			buscarJugador();
+			comprobar.listaDeJugadores();
+//			j.listaJugadores();
+//			System.out.println("\n\t Filtrar jugador: ");
+//			comprobar.consultarFichaJugador();
+//			buscarJugador();
 			break;
 		case 4:
 			System.out.print("Dar de baja lógica un Jugador");
-			altaBajaJugador();
+			comprobar.darBajaLogica();
+			//altaBajaJugador();
 			break;
 		case 5:
 			System.out.println("exportar a fichero	.txt");
-			j.volcarTxt();
+			comprobar.volcadoTxt();
+			//j.volcarTxt();
 			break;
 		case 6:
 			System.out.println("cargar desde txt");
-			j.cargarJugadores();
+			comprobar.cargarDatos();
+			//j.cargarJugadores();
 			break;
 		case 7:
 			System.out.println("Exportar a fichero	 .dat");
-			j.volcarDat();
+			comprobar.volcadoDat();
+//			j.volcarDat();
 			break;
 		case 8:
 			System.out.println("Modificar un Jugador\n");
-			modificarJugador();
+			comprobar.modificarJugador();
+//			modificarJugador();
 
 			break;
 		case 9:
+//			no se si lp necesito.
 			System.out.println("Dar de alta lógica un jugador");
 
 			altaBajaJugador();
@@ -164,7 +175,10 @@ public class LogicaNegocio {
 		try {
 			int id = sc.nextInt();
 			jugador = j.buscarPorId(id);
+			
 			System.out.println("el jugador a modificar estado esta = " + jugador.isActivo());
+			
+			
 			j.eliminar(jugador);
 		} catch (InputMismatchException e) {
 			System.err.println("Ingresa valores correcto");

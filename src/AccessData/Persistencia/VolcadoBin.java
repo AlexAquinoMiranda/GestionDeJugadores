@@ -93,9 +93,10 @@ public class VolcadoBin {
 	}
 
 	public int longitudFichero() {
-		
-		return (int)longReg;
+
+		return (int) longReg;
 	}
+
 	public VolcadoBin(String name, List<Pair<String, Integer>> campos) {
 		this.fichero = new File(name);
 		this.campos = campos;
@@ -160,7 +161,7 @@ public class VolcadoBin {
 		insertar(reg, this.numReg++);
 	}
 
-	public void insertar(Map<String, String> reg, long pos) {
+	private void insertar(Map<String, String> reg, long pos) {
 		try (RandomAccessFile faa = new RandomAccessFile(fichero, "rws")) {
 
 			faa.seek(pos * this.longReg);

@@ -1,0 +1,11 @@
+{nombre=Alexis                   , apellido=Aquino                   , fechaNacimiento=2003, equipo=Madrid               , activo= false, id=1000} 
+{nombre=Thiago                   , apellido=VALDERA                  , fechaNacimiento=2016, equipo=Barcelona            , activo= false, id=1001} 
+{nombre=alex                     , apellido=aquino                   , fechaNacimiento=2003, equipo=barca                , activo= false, id=1002} 
+{nombre=Añexito                 , apellido=Mirandas                 , fechaNacimiento=2003, equipo=Argetina             , activo= false, id=1003} 
+{nombre=THiago                   , apellido=Valdera                  , fechaNacimiento=2021, equipo=barca                , activo= false, id=1004} 
+{nombre=javi                     , apellido=trilla                   , fechaNacimiento=2001, equipo=RM                   , activo= false, id=1005} 
+{nombre=alex                     , apellido=aquino                   , fechaNacimiento=2003, equipo=barca                , activo= false, id=1006} 
+{nombre=alexx                    , apellido=aquinoss                 , fechaNacimiento=2022, equipo=madrid               , activo= false, id=1007} 
+{nombre=THiago                   , apellido=Valdera                  , fechaNacimiento=2021, equipo=barca                , activo= false, id=1008} 
+{nombre=00000000                 , apellido=999999                   , fechaNacimiento=9999, equipo=9999999              , activo= false, id=1009} 
+{nombre=añe                     , apellido=aladda                   , fechaNacimiento=3000, equipo=fdvl                 , activo= false, id=1010} 
